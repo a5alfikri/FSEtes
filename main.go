@@ -27,7 +27,7 @@ func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/add_to_cart/", addToCartHandler)
 	http.HandleFunc("/checkout", checkoutHandler)
-	http.ListenAndServe(":9090", nil)
+	http.ListenAndServe(":8080", nil)
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
