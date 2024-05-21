@@ -68,12 +68,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		cart[username] = userCart
 	}
 	//menambah body karena tidak bisa menampilkan product di etalase
-	/*
-			= float64(24.12)
-		var str = strconv.FormatFloat(num, 'f', 6, 64)
 
-		fmt.Println(str) // 24.120000
-	*/
 	// \n ganti ke <br>
 	fmt.Fprintf(w, "<body> Hello, %s! Available products:<br>", username)
 
@@ -93,7 +88,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func addToCartHandler(w http.ResponseWriter, r *http.Request) {
-	product := r.URL.Path[len("/add_to_cart/"):] //Sign
+	product := r.URL.Path[len("/add_to_cart/"):]
 	cookie, err := r.Cookie("session")
 	if err != nil {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
@@ -110,7 +105,7 @@ func addToCartHandler(w http.ResponseWriter, r *http.Request) {
 		cart[username] = userCart
 	}
 
-	userCart[product]++ //sign
+	userCart[product]++
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
@@ -134,31 +129,16 @@ func checkoutHandler(w http.ResponseWriter, r *http.Request) {
 	total := 0.0
 	for product, quantity := range userCart {
 		price, ok := products[product]
-		/*
-			"apple":  1.0,
-			"banana": 0.5,
 
-			products[apple]
-		*/
 		if !ok {
 			continue
 		}
 		total += price * float64(quantity)
-		/*
-			total = total + price * quantity
-			1 = 1 + 1.0 * 1
-			2 = 2 + 0.5 * 2
-			3
-		*/
+
 	}
 	balances[username] -= total
 
 	cart[username] = make(map[string]int) // reset keranjang setelah checkout
-	/*
-		Balances[user1] = Balance(100) - Total
-		Balances[user1] = Balance(100) - 3
-		Balances[user1] = Balance(97) - Total
-	*/
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
