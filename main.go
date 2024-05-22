@@ -46,7 +46,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
 	}
-	//Menambah body karena tidak bisa input username dan password
+	//Menambahkan body untuk form username dan password
 	fmt.Fprint(w, `<body><form action="/login" method="post">
 Username: <input type="text" name="username"><br>
 Password: <input type="password" name="password"><br>
@@ -72,6 +72,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	// \n ganti ke <br>
 	fmt.Fprintf(w, "<body> Hello, %s! Available products:<br>", username)
 
+	//tampilan your balance
 	var str = strconv.FormatFloat(balances[username], 'f', 2, 64)
 	fmt.Fprintf(w, "Your Balance: %s<br>", str)
 
